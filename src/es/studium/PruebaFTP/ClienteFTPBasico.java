@@ -432,20 +432,17 @@ public class ClienteFTPBasico extends JFrame
 				listaDirec = (JList<String>) e.getSource();
 				if(ficheroSelec.contains("(DIR)")) {
 					if (e.getClickCount()==2) {
-//						String carpetaSeleccionada="";
-//						String[] carpeta =ficheroSelec.split(" ");
-//						for (int i=0;i<carpeta.length;i++) {
-//							if(i!=0) {
-//								carpetaSeleccionada=carpetaSeleccionada+" "+carpeta[i];
-//							}
-//						}
-						//Quitamos todos los espacios en blanco
-						String[] nombreDirectorio = ficheroSelec.split(" ");
-						txtArbolDirectoriosConstruido.setText("DIRECTORIO: "+nombreDirectorio[1].toString());
-						txtActualizarArbol.setText(nombreDirectorio[1].toString());
+						String carpetaSeleccionada="";
+						String[] carpeta =ficheroSelec.split(" ");
+						for (int i=0;i<carpeta.length;i++) {
+							if(i!=0) {
+								carpetaSeleccionada=carpetaSeleccionada+" "+carpeta[i];
+								System.out.println(carpetaSeleccionada);
+							}
+						}
 						try {
 							//Reescribimos el direcSelec, para indicar el directorio al que nos movemos
-							direcSelec=direcSelec + nombreDirectorio[1].toString()+"/";
+							direcSelec=direcSelec + carpetaSeleccionada.trim()+"/";
 							directorioActual="DIRECTORIO RAIZ: "+direcSelec;
 							//Mostramos el nombre del directorio Actual
 							cliente.changeWorkingDirectory(direcSelec);
