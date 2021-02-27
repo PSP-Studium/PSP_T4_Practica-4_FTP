@@ -233,8 +233,14 @@ public class ClienteFTPBasico extends JFrame
 			public void actionPerformed(ActionEvent e)
 			{
 				if(ficheroSelec.contains("(DIR)")) {
+					String carpetaSeleccionada="";
 					String[] carpeta =ficheroSelec.split(" ");
-					String nombreCarpeta = JOptionPane.showInputDialog(null,"Introduce el nombre del directorio a eliminar",carpeta[1]);
+					for (int i=0;i<carpeta.length;i++) {
+						if(i!=0) {
+							carpetaSeleccionada=carpetaSeleccionada+" "+carpeta[i];
+						}
+					}
+					String nombreCarpeta = JOptionPane.showInputDialog(null,"Introduce el nombre del directorio a eliminar",carpetaSeleccionada);
 					int respuesta= JOptionPane.showConfirmDialog(null, "¿Esta seguro de querer eliminar el directorio "+nombreCarpeta.trim()+"?");
 					if(respuesta == JOptionPane.OK_OPTION) {
 						if (!(nombreCarpeta==null)) 
@@ -344,16 +350,21 @@ public class ClienteFTPBasico extends JFrame
 				// TODO Auto-generated method stub
 				//Comprobamos que es un directorio comprobamdo que en su nombre tenga (DIR)
 				if(ficheroSelec.contains("(DIR)")) {
-					//Quitamos los espacios
-					String[] renombrarDirectorio = ficheroSelec.split(" ");
-					String nombreNuevo = JOptionPane.showInputDialog(null, "Indica el nuevo nombre del directorio: ", renombrarDirectorio[1]);
+					String archivoSeleccionado="";
+					String[] archivo =ficheroSelec.split(" ");
+					for (int i=0;i<archivo.length;i++) {
+						if(i!=0) {
+							archivoSeleccionado=archivoSeleccionado+" "+archivo[i];
+							System.out.println(archivoSeleccionado);
+						}
+					}
+					String nombreNuevo = JOptionPane.showInputDialog(null, "Indica el nuevo nombre del directorio: ", archivoSeleccionado);
 					//Comprobamos que el nuevo nombre dado no este vacio
 					if(nombreNuevo!=null) {
-						if(!direcSelec.equals("/")) {
 							try {
 								if(cliente.isAvailable()) {
-									cliente.rename(renombrarDirectorio[1], nombreNuevo);
-									String mensaje = renombrarDirectorio[1].trim() + " => Se ha modificado correctamente ...";
+									cliente.rename(archivoSeleccionado.trim(), nombreNuevo.trim());
+									String mensaje = archivoSeleccionado.trim() + " => Se ha modificado correctamente ...";
 									JOptionPane.showMessageDialog(null, mensaje);
 									txtArbolDirectoriosConstruido.setText(mensaje);
 									//directorio de trabajo actual
@@ -370,7 +381,6 @@ public class ClienteFTPBasico extends JFrame
 								// TODO: handle exception
 								error.printStackTrace();
 							}
-						}
 					}
 				} else {
 					JOptionPane.showMessageDialog(null, ficheroSelec + " => Error el archivo seleccionado no es un directorio");
@@ -422,6 +432,13 @@ public class ClienteFTPBasico extends JFrame
 				listaDirec = (JList<String>) e.getSource();
 				if(ficheroSelec.contains("(DIR)")) {
 					if (e.getClickCount()==2) {
+//						String carpetaSeleccionada="";
+//						String[] carpeta =ficheroSelec.split(" ");
+//						for (int i=0;i<carpeta.length;i++) {
+//							if(i!=0) {
+//								carpetaSeleccionada=carpetaSeleccionada+" "+carpeta[i];
+//							}
+//						}
 						//Quitamos todos los espacios en blanco
 						String[] nombreDirectorio = ficheroSelec.split(" ");
 						txtArbolDirectoriosConstruido.setText("DIRECTORIO: "+nombreDirectorio[1].toString());
